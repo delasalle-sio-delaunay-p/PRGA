@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 //import nom1binome.nom2binome.tp1.*;
-
+import fr.istic.prga.tp1.*;
 public class MotsCroisesTest
 {
 	private MotsCroises mc ;

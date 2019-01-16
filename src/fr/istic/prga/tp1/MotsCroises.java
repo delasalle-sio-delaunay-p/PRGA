@@ -45,6 +45,17 @@ public class MotsCroises {
 		assert(coordCorrectes(lig,col)) : "Coordonnées incorrectes";
 		return this.solution.getCellule(lig, col) == null;
 	}
+
+	public void setCaseNoire(int lig, int col, boolean noire) {
+		assert(coordCorrectes(lig,col)) : "Coordonnées incorrectes";
+
+		if (noire) {
+			this.solution.setCellule(lig, col, null);
+		}
+		else {
+			this.solution.setCellule(lig, col, " ");
+		}
+	}
 	
 	public void setSolution(int lig, int col, char sol) {
 		assert(coordCorrectes(lig,col) && !estCaseNoire(lig,col)) : "Coordonnées incorrectes ou case noire";
@@ -56,6 +67,18 @@ public class MotsCroises {
 		assert(coordCorrectes(lig,col) && !estCaseNoire(lig,col)) : "Coordonnées incorrectes ou case noire";
 		
 		return this.solution.getCellule(lig, col).charAt(0);
+	}
+	
+	public void setProposition(int lig, int col, char sol) {
+		assert(coordCorrectes(lig,col) && !estCaseNoire(lig,col)) : "Coordonnées incorrectes ou case noire";
+		
+		this.proposition.setCellule(lig, col, String.valueOf(sol));
+	}
+	
+	public char getProposition(int lig, int col) {
+		assert(coordCorrectes(lig,col) && !estCaseNoire(lig,col)) : "Coordonnées incorrectes ou case noire";
+		
+		return this.proposition.getCellule(lig, col).charAt(0);
 	}
 	
 	public String getDefinition(int lig, int col, boolean horiz) {
