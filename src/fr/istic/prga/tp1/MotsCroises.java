@@ -43,14 +43,14 @@ public class MotsCroises {
 	
 	public boolean estCaseNoire(int lig, int col) {
 		assert(coordCorrectes(lig,col)) : "Coordonnées incorrectes";
-		return this.solution.getCellule(lig, col) == null;
+		return this.solution.getCellule(lig, col) == "*";
 	}
 
 	public void setCaseNoire(int lig, int col, boolean noire) {
 		assert(coordCorrectes(lig,col)) : "Coordonnées incorrectes";
 
 		if (noire) {
-			this.solution.setCellule(lig, col, null);
+			this.solution.setCellule(lig, col, "*");
 		}
 		else {
 			this.solution.setCellule(lig, col, " ");
