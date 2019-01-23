@@ -1,4 +1,4 @@
-package fr.istic.prga.tp1;
+package delaunay.diabat.tp1;
 
 import static org.junit.Assert.*;
 

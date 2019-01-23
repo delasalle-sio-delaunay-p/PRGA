@@ -1,4 +1,4 @@
-package fr.istic.prga.tp1;
+package delaunay.diabat.tp1;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 //import nom1binome.nom2binome.tp1.*;
-import fr.istic.prga.tp1.*;
+import delaunay.diabat.tp1.*;
 public class MotsCroisesTest
 {
 	private MotsCroises mc ;

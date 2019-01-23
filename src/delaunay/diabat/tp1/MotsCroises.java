@@ -1,8 +1,8 @@
-package fr.istic.prga.tp1;
+package delaunay.diabat.tp1;
 
 /**
  * PRGA - TP1
- * @author Pierre
+ * @author Pierre D. , Alexis D.
  * @since 2019-01-14
  * @version 1.0.1
  *
