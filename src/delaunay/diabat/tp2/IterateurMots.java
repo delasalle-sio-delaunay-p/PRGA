@@ -17,25 +17,16 @@ public class IterateurMots implements Iterator<String> {
 	public IterateurMots(Object[] tab) {
 		
 		this.tab = tab.clone();
-		int cursor = -1;
-		int i = 0;
-		
-		
-		while (this.tab[i] != null && i < tab.length) 
-		{
-			++i;
-		}
-		
-		cursor = i;
-		
-		if (cursor == -1) {
-			cursor = tab.length + 1;
-		}
-			   
-		this.cursor = cursor;
+		this.setCursor();
 		
 	}
 	
+    private void setCursor() {
+        while (this.cursor < this.tab.length && this.tab[this.cursor] == null) {
+            this.cursor++;
+        }
+    }
+    
 	@Override
 	public void remove() {
 		throw new UnsupportedOperationException();
@@ -43,21 +34,21 @@ public class IterateurMots implements Iterator<String> {
 	
 	@Override
 	public boolean hasNext() {
-		return (this.cursor <= tab.length);
+		return (this.cursor < tab.length) && (this.tab[this.cursor] != null);
 	}
 
 	@Override
 	public String next() {
+		assert this.hasNext() : "L'itérateur n'est pas sur un objet";
 		
 		String concat = "";
 		
-		while (this.hasNext()) {
-			
-			concat += this.tab[this.cursor];
-			this.cursor++;
-			
-		}
-			
+		 while(this.cursor < tab.length && (this.tab[this.cursor] != null)) {
+			 concat += tab[this.cursor].toString();
+			 this.cursor++;
+		 }
+		 
+		this.cursor++;
 		return concat;
 	}
 
