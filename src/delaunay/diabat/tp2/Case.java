@@ -9,19 +9,47 @@ package delaunay.diabat.tp2;
  */
 public class Case {
 
-	private Character solution;
-	private Character proposition;
-	private Grille horizontal;
-	private Grille vertical;
-	private boolean caseNoire;
+	private char solution; 
+	private char proposition; 
+	private char horizontal; 
+	private char vertical;
+	private boolean estNoire;
 	
-	public Case(Character solution, Character proposition, Grille horizontal, Grille vertical, boolean caseNoire) {
+	/**
+	 * Constructeur Case
+	 * @param solution
+	 * @param proposition
+	 * @param horizontal
+	 * @param vertical
+	 * @param estNoire
+	 */
+	public Case(Character solution, Character proposition, Character horizontal, Character vertical, boolean estNoire) {
 		
 		this.solution = solution;
 		this.proposition = proposition;
 		this.horizontal = horizontal;
 		this.vertical = vertical;
-		this.caseNoire = caseNoire;
+		this.estNoire = estNoire;
 	
+	}
+	
+	/**
+	 * Getters/Setters
+	 */
+	
+	public char getSolution() {
+		return this.solution;
+	}
+	
+	public void setSolution(char solution) {
+		this.solution = solution;
+	}
+	
+	public char getProposition() {
+		return this.proposition;
+	}
+	
+	public void setProposition(char proposition) {
+		this.proposition = proposition;
 	}
 }

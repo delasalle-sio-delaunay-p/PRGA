@@ -14,11 +14,10 @@ public class IterateurMots implements Iterator<String> {
 	private Object[] tab;
 	private int cursor;
 	
-	public IterateurMots(Object[] tab) {
-		
+	public IterateurMots(Object[] tab) {	
 		this.tab = tab.clone();
+		this.cursor = 0;
 		this.setCursor();
-		
 	}
 	
     private void setCursor() {
@@ -34,14 +33,16 @@ public class IterateurMots implements Iterator<String> {
 	
 	@Override
 	public boolean hasNext() {
-		return (this.cursor < tab.length) && (this.tab[this.cursor] != null);
+		return (this.cursor < tab.length);
 	}
 
 	@Override
 	public String next() {
-		assert this.hasNext() : "L'itérateur n'est pas sur un objet";
+		assert this.hasNext() : "L'itÃ©rateur n'est pas sur un objet";
 		
 		String concat = "";
+		
+		this.setCursor();
 		
 		 while(this.cursor < tab.length && (this.tab[this.cursor] != null)) {
 			 concat += tab[this.cursor].toString();

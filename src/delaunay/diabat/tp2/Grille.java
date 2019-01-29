@@ -7,11 +7,11 @@ package delaunay.diabat.tp2;
  * @version 1.0.1
  *
  */
-public class Grille {
+public class Grille<T> {
 
 	private int hauteur;
 	private int largeur;
-	private String tab[][];
+	private Object tab[][];
 	private int taille;
 	
 	public Grille (int hauteur, int largeur) {
@@ -21,7 +21,7 @@ public class Grille {
 		this.hauteur = hauteur;
 		this.largeur = largeur;
 		this.taille = hauteur * largeur;
-		this.tab = new String[hauteur][largeur];
+		this.tab = new Object[hauteur][largeur];
 	}
 	
 	public int getHauteur() {
@@ -36,7 +36,7 @@ public class Grille {
 		return (lig <= this.hauteur && col <= this.largeur && lig > 0 && col > 0);
 	}
 	
-	public String getCellule(int lig, int col) {
+	public Object getCellule(int lig, int col) {
 		assert(coordCorrectes(lig,col)) : "Coordonnées incorrectes";
 		
 		return this.tab[lig-1][col-1];
