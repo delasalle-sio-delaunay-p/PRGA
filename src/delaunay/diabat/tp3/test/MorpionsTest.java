@@ -58,7 +58,7 @@ public class MorpionsTest
 		//  * non­fin de partie
 		assertTrue("Partie pas finie après premier coup", ! morpions.estFinie());
 		//  * identité du premier joueur
-		assertTrue(" ", morpions.getJoueur() == 2) ;
+		assertTrue("Au tour du joueur 2", morpions.getJoueur() == 2) ;
 		
 		// On reteste l'invariant
 		testInvariant() ;
@@ -94,18 +94,22 @@ public class MorpionsTest
 		morpions.jouerCoup(1, 3);
 		assertTrue("Partie pas finie après premier coup", ! morpions.estFinie());
 		morpions.jouerCoup(1, 2);
+		assertTrue("Partie pas finie", ! morpions.estFinie());
 		morpions.jouerCoup(2, 1);
+		assertTrue("Partie pas finie", ! morpions.estFinie());
 		morpions.jouerCoup(1, 1);
 		assertTrue("Partie pas finie", ! morpions.estFinie());
 		morpions.jouerCoup(2, 2);
+		assertTrue("Partie pas finie", ! morpions.estFinie());
 		morpions.jouerCoup(3, 1);
+		assertTrue("Partie pas finie", ! morpions.estFinie());
 		morpions.jouerCoup(3, 2);
 		assertTrue("Partie pas finie", ! morpions.estFinie());
+		morpions.jouerCoup(2, 3);
+		assertTrue("Partie pas finie", ! morpions.estFinie());
 		morpions.jouerCoup(3, 3);
-		assertEquals
-		("Après 9 coups sans gagnant, la partie est un match nul", SpecifModeleMorpions.Etat.MATCH_NUL, morpions.getEtatJeu() );
-		assertTrue
-		("Après 9 coups la partie est forcément terminée", morpions.estFinie());
+		assertEquals("Après 9 coups sans gagnant, la partie est un match nul", SpecifModeleMorpions.Etat.MATCH_NUL, morpions.getEtatJeu() );
+		assertTrue("Après 9 coups la partie est forcément terminée", morpions.estFinie());
 		
 	}
 
@@ -113,15 +117,134 @@ public class MorpionsTest
 	public void testJoueur1gagnant()
 	{
 		// ----------------------
-		// SÉQUENCE 5 À COMPLÉTER
+		// Scénario 1 : Joueur 1 gagne en 3 coups
 		// ----------------------
-		fail("Test à écrire") ;
+		
+		morpions.jouerCoup(1, 1); // J1
+		assertTrue("Partie pas finie après premier coup", ! morpions.estFinie());
+		morpions.jouerCoup(2, 1); // J2
+		assertTrue("Partie pas finie après 2 coups", ! morpions.estFinie());
+		morpions.jouerCoup(1, 2); // J1
+		assertTrue("Partie pas finie après 3 coups", ! morpions.estFinie());
+		morpions.jouerCoup(2, 2); // J2
+		assertTrue("Partie pas finie après 4 coups", ! morpions.estFinie());
+		morpions.jouerCoup(1, 3); // J1 gagne en 3 coups
+		assertTrue("Partie terminée, remportée par joueur 1", morpions.estFinie());
+		assertTrue("Joueur 1 non vainqueur", morpions.getVainqueur() == 1);
+
+	}
+	
+	@Test
+	public void testVainqueur1() throws Exception
+	{
+		// ----------------------
+		// Scénario 1  getVainqueur1 : Joueur 1 gagne en 3 coups
+		// ----------------------
+		
+		morpions.jouerCoup(1, 1); // J1
+		assertTrue("Partie pas finie après premier coup", ! morpions.estFinie());
+		morpions.jouerCoup(2, 1); // J2
+		assertTrue("Partie pas finie après 2 coups", ! morpions.estFinie());
+		morpions.jouerCoup(1, 2); // J1
+		assertTrue("Partie pas finie après 3 coups", ! morpions.estFinie());
+		morpions.jouerCoup(2, 2); // J2
+		assertTrue("Partie pas finie après 4 coups", ! morpions.estFinie());
+		morpions.jouerCoup(1, 3); // J1 gagne en 3 coups
+		assertTrue("Partie terminée, remportée par joueur 1", morpions.estFinie());
+		assertTrue("Joueur 1 non vainqueur", morpions.getVainqueur() == 1);	
+	}
+	
+	@Test
+	public void testVainqueur2()
+	{
+		// ----------------------
+		// Scénario getVainqueur 2 : Match nul entre les 2 joueurs (9 coups total)
+		// ----------------------	
+			
+		morpions.jouerCoup(1, 3);
+		assertTrue("Partie pas finie après premier coup", ! morpions.estFinie());
+		morpions.jouerCoup(1, 2);
+		assertTrue("Partie pas finie", ! morpions.estFinie());
+		morpions.jouerCoup(2, 1);
+		assertTrue("Partie pas finie", ! morpions.estFinie());
+		morpions.jouerCoup(1, 1);
+		assertTrue("Partie pas finie", ! morpions.estFinie());
+		morpions.jouerCoup(2, 2);
+		assertTrue("Partie pas finie", ! morpions.estFinie());
+		morpions.jouerCoup(3, 1);
+		assertTrue("Partie pas finie", ! morpions.estFinie());
+		morpions.jouerCoup(3, 2);
+		assertTrue("Partie pas finie", ! morpions.estFinie());
+		morpions.jouerCoup(2, 3);
+		assertTrue("Partie pas finie", ! morpions.estFinie());
+		morpions.jouerCoup(3, 3);
+		assertEquals("Après 9 coups sans gagnant, la partie est un match nul", SpecifModeleMorpions.Etat.MATCH_NUL, morpions.getEtatJeu() );
+		assertTrue("Personne n'a gagné", morpions.getVainqueur() == 0);	
 	}
 
-	// ------------------------------
-	// SÉQUENCE À COMPLÉTER
-	// avec d'autres méthodes de test
-	// (une méthode par scénario)
-	// ------------------------------
+	@Test
+	public void testVainqueur3()
+	{
+		// ----------------------
+		// Scénario getVainqueur 3 : Joueur 2 gagne en 3 coups
+		// ----------------------
+		
+		morpions.jouerCoup(1, 1); // J1
+		assertTrue("Partie pas finie après premier coup", ! morpions.estFinie());
+		morpions.jouerCoup(1, 2); // J2
+		assertTrue("Partie pas finie", ! morpions.estFinie());
+		morpions.jouerCoup(2, 1); // J1
+		assertTrue("Partie pas finie", ! morpions.estFinie());
+		morpions.jouerCoup(2, 2); // J2
+		assertTrue("Partie pas finie", ! morpions.estFinie());
+		morpions.jouerCoup(3, 3); // J1
+		assertTrue("Partie pas finie", ! morpions.estFinie());
+		morpions.jouerCoup(3, 2); // J2		
+		assertTrue("Partie terminée, remportée par joueur 2", morpions.estFinie());
+		assertTrue("Joueur 2 non vainqueur", morpions.getVainqueur() == 2);
+	}
+	
+	@Test
+	public void testControle() 
+	{
+		// Scénario tentant divers coups non autorisés,
+		// avec vérification systématique de estCoupAutorise() 
+	
+		morpions.jouerCoup(1, 1); // J1
+		assertTrue("Coup au même endroit que précédent", !morpions.estCoupAutorise(1, 1));
+		
+		assertTrue("Coup hors de la grille", !morpions.estCoupAutorise(4, 4));
+		
+		morpions.jouerCoup(2, 1); // J2
+		assertTrue("Coup au même endroit que précédent", !morpions.estCoupAutorise(2, 1));
+	
+		assertTrue("Case occupée", !morpions.estCoupAutorise(1, 1)); // J1 rejoue le même coup que son premier
+		
+	}
+	
+	@Test
+	public void testFinPartie1()
+	{
+		// Scénarios explorant les situations de fin de partie,
+		// avec vérification systématique de estFinie() et de
+		// getVainqueur() :
+		//  * alignement horizontal (grille pleine ou non)
+		//  * alignement vertical (grille pleine ou non)
+		//  * alignement diagonal (grille pleine ou non)
+		
+	}
+	
+	@Test
+	public void testFinPartie2()
+	{
+		
+	}
+	
+	@Test
+	public void testFinPartie3()
+	{
+		
+	}
+	
 }
 
