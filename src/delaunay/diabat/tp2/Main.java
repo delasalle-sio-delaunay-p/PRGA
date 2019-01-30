@@ -26,6 +26,7 @@ public class Main {
 		System.out.println(maGrille);
 		*/
 		
+		
 		Character[] tab = new Character[8];
 		tab[0] = null;
 		tab[1] = 'A';
@@ -42,6 +43,11 @@ public class Main {
 		{
 			System.out.println(iter.next() + ", ");
 		}	
+		
+		// Question 2.3
+		
+		MotsCroisesAvecGen mc = new MotsCroisesAvecGen<String> (5, 5);
+		
 		
 	}
 

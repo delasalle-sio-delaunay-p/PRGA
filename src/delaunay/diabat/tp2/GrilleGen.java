@@ -1,13 +1,6 @@
 package delaunay.diabat.tp2;
 
-/**
- * PRGA - TP2
- * @author Pierre D. , Alexis D.
- * @since 2019-01-21
- * @version 1.0.1
- *
- */
-public class GrilleGen <T> {
+public class GrilleGen <T> implements SpecifGrilleGen <T> {
 
 	private int hauteur;
 	private int largeur; 
@@ -20,6 +13,10 @@ public class GrilleGen <T> {
 		 this.tab = new Object [hauteur][largeur]; 
 		
 	 }
+	
+	public Object getTab () {
+		return this.tab;
+	}
 	
 	public IterateurMots iterateurMots (boolean horizontal, int num) {
 		
