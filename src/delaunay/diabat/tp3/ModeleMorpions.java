@@ -33,74 +33,22 @@ public class ModeleMorpions implements SpecifModeleMorpions {
 
 	}
 	
+	
 	/**
-	 * 
-	 * @param mode : 1 = ligne, 2 = col, 3 = diag
-	 * @return
+	 * Scan complet pour la recherche des vainqueurs
+	 * @return 1 si le joueur 1 a gagné, 2 si le joueur 2 a gagné, 0 sinon
 	 */
-	public int scanTab(int mode) {
-		
-		int produit = 0;
-		
-		switch(mode) 
-		{
-			case 1:
-				// Scan des lignes
-				for(int i = 1; i <= tab.length; ++i) 
-				{
-					for(int j = 1; j <= tab.length; ++j) 
-					{
-						produit *= tab[i][j];
-					}
-					
-					if (produit == 1)  { return 1; }
-					if (produit == 8) { return 2; }
-				}
-				
-				break;
-				
-			case 2:
-				// Scan des colonnes
-				for(int i = 1; i <= tab.length; ++i) 
-				{
-					for(int j = 1; j <= tab.length; ++j) 
-					{
-						produit *= tab[j][i];
-					}
-					
-					if (produit == 1)  { return 1; }
-					if (produit == 8) { return 2; }
-				}					
-				break;
-				
-			case 3:
-				// Scan des diagonales
-				
-				int diag1 = tab[1][1] * tab[2][2] * tab[3][3];
-				int diag2 = tab[1][3] * tab[2][2] * tab[1][3]; 
-				
-				if (diag1 == 1) { return 1; }
-				if (diag1 == 8) { return 2; }
-				if (diag2 == 1) { return 1; }
-				if (diag2 == 8) { return 2; }
-				
-				break;
-		}
-		
-		return 0;
-	
-	}
-	
 	public int fullScan() {
 		
-		int produit = 0;
+		int produit = 1;
 		
 		// Scan des lignes
-		for(int i = 1; i < tab.length; ++i) 
+		for(int lig = 1; lig <= 3; ++lig) 
 		{
-			for(int j = 1; j < tab.length; ++j) 
+			produit = 1;
+			for(int col = 1; col <= 3; ++col) 
 			{
-				produit *= tab[i][j];
+				produit *= getValue(lig, col);
 			}
 			
 			if (produit == 1)  { return 1; }
@@ -108,21 +56,22 @@ public class ModeleMorpions implements SpecifModeleMorpions {
 		}
 		
 		// Scan des colonnes
-		for(int i = 1; i < tab.length; ++i) 
+		for(int col = 1; col <= 3; ++col) 
 		{
-			for(int j = 1; j < tab.length; ++j) 
+			produit = 1;
+			for(int lig = 1; lig <= 3; ++lig) 
 			{
-				produit *= tab[j][i];
+				produit *= getValue(lig, col);
 			}
 			
 			if (produit == 1)  { return 1; }
 			if (produit == 8) { return 2; }
-		}	
+		}
 		
 		// Scan des diagonales
 		
-		int diag1 = tab[1][1] * tab[2][2] * tab[3][3];
-		int diag2 = tab[1][3] * tab[2][2] * tab[1][3]; 
+		int diag1 = getValue(1,1) * getValue(2,2) * getValue(3,3);
+		int diag2 = getValue(1,3) * getValue(2,2) * getValue(3,1); 
 		
 		if (diag1 == 1) { return 1; }
 		if (diag1 == 8) { return 2; }
@@ -134,6 +83,10 @@ public class ModeleMorpions implements SpecifModeleMorpions {
 		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean estPleine() {
 		
 		for(int i = 1; i < tab.length; ++i) 
@@ -142,104 +95,111 @@ public class ModeleMorpions implements SpecifModeleMorpions {
 			{
 				if (tab[i][j] == 0) { return false; }
 			}
-		}
-		
+		}	
 		return true;
 	}
 	
 	
-	/* SpecifMorpions.Etat : type énuméré des états possibles du jeu :
-	 * J1_JOUE      : le joueur 1 est le prochain à jouer
-	 * J2_JOUE      : le joueur 2 est le prochain à jouer
-	 * MATCH_NUL    : jeu fini, pas de vainqueur
-	 * J1_VAINQUEUR : jeu fini, le  vainqueur est 1e joueur 1
-	 * J2_VAINQUEUR : jeu fini, le  vainqueur est 1e joueur 2
-	*/
 	@Override
 	public Etat getEtatJeu() {
 		
-		if (this.estFinie() && this.getVainqueur() != 0) return Etat.MATCH_NUL;
-		if (this.getVainqueur() == 1) return Etat.J1_VAINQUEUR;
-		if (this.getVainqueur() == 2) return Etat.J2_VAINQUEUR;
-		
-		if (!this.estFinie() && this.getJoueur() == 1) return Etat.J1_JOUE;
-		if (!this.estFinie() && this.getJoueur() == 1) return Etat.J2_JOUE;
-		
-		return null;
+		return this.etatJeu;
 	}
 
 	@Override
 	public int getJoueur() {
 
-		if (this.estFinie()) { return 0; }
-		else {
-			
-			int count1 = 0;
-			int count2 = 0;
-			
-			for(int i = 1; i < tab.length; ++i) 
-			{
-				for(int j = 1; j < tab.length; ++j) 
-				{
-					if (tab[i][j] == 1) { count1++; }
-					else if (tab[i][j] == 2) { count2++; }
-					
-				}
-			}
-			return (count1 > count2) ? 2 : 1; 
-		}
+		if (etatJeu == SpecifModeleMorpions.Etat.J1_JOUE) return 1;
+		if (etatJeu == SpecifModeleMorpions.Etat.J2_JOUE) return 2;
+		
+		return 0;
 	}
 
+	/**
+	 * getVainqueur() : numéro du vainqueur
+	 * @return numéro du vainqueur (1 ou 2), ou 0 s'il n'y a pas, ou pas encore, de vainqueur
+	 */
 	@Override
 	public int getVainqueur() {
 		
-		if (!this.estFinie() || this.fullScan() == 0) { return 0; }
-		else {
-			
-			return (this.fullScan() == 1)? 1 : 2; 
-			
-		}
+	    if (etatJeu == SpecifModeleMorpions.Etat.J1_VAINQUEUR) return 1;
+	    if (etatJeu == SpecifModeleMorpions.Etat.J2_VAINQUEUR) return 2;
+	    
+	    return 0;
 	}
 
+	/**
+	 * getNombreCoups() : nombre de coups joués
+	 * @return nombre de coups joués
+	 */
 	@Override
 	public int getNombreCoups() {
 		
-		int count = 0;
-		
-		for(int i = 1; i < tab.length; ++i) 
-		{
-			for(int j = 0; j < tab.length; ++j) 
-			{
-				if (tab[i][j] > 0) {
-					++count;
-				}
-			}
-		}	
-		return count;
+		return nbCoupsJoues;
 	}
 
+	/**
+	 * estFinie() : détermine si la partie est terminée ou non
+	 * @return vrai si et seulement si getEtatJeu() est dans {MATCH_NUL, J1_VAINQUEUR, J2_VAINQUEUR}
+	 */
 	@Override
 	public boolean estFinie() {
 
-		//return (this.estPleine() && this.getVainqueur() != 0);
-		return (this.getEtatJeu() == Etat.MATCH_NUL || this.getEtatJeu() == Etat.J1_VAINQUEUR || this.getEtatJeu() == Etat.J2_VAINQUEUR);
+		return (etatJeu != SpecifModeleMorpions.Etat.J1_JOUE) && (etatJeu != SpecifModeleMorpions.Etat.J2_JOUE);
 	}
 
+	public boolean estCaseValide(int ligne, int colonne)
+	{
+	    return (1 <= ligne) && (ligne <= 3) && (1 <= colonne) && (colonne <= 3);
+	}
+	  
+	  
 	@Override
 	public boolean estCoupAutorise(int ligne, int colonne) {
 
-		return tab[ligne][colonne] == 0;
+	    return (estCaseValide(ligne, colonne)) && (getValue(ligne, colonne) == 0);
 	}
 
 	@Override
 	public void jouerCoup(int ligne, int colonne) {
 		
-		assert(this.estCoupAutorise(ligne, colonne)) : "Le coup n'est pas autorisé";
-		assert(this.estFinie())  : "La partie est finie";
-		
-		tab[ligne][colonne] = this.getJoueur();
+	    assert (!estFinie()) : "La partie est terminée";
+	    assert (estCoupAutorise(ligne, colonne)) : "Le coup n'est pas autorisé";
+	    if (estCoupAutorise(ligne, colonne))
+	    {
+
+	      setValue(ligne, colonne, getJoueur());
+	      nbCoupsJoues += 1;
+	      resync();
+	    }
 	}
 	
+	public void resync()
+	{
+	    int vainqueur = fullScan();
+	    
+	    if (vainqueur == 1)
+	    {
+	      etatJeu = SpecifModeleMorpions.Etat.J1_VAINQUEUR;
+	    }
+	    else if (vainqueur == 2)
+	    {
+	      etatJeu = SpecifModeleMorpions.Etat.J2_VAINQUEUR;
+	    }
+	    else if (nbCoupsJoues == 9)
+	    {
+	      etatJeu = SpecifModeleMorpions.Etat.MATCH_NUL;
+	    }
+	    else if (etatJeu == SpecifModeleMorpions.Etat.J1_JOUE)
+	    {
+	      etatJeu = SpecifModeleMorpions.Etat.J2_JOUE;
+	    }
+	    else
+	    {
+	      etatJeu = SpecifModeleMorpions.Etat.J1_JOUE;
+	    }
+	}
+	  
 	public void afficherTab() {
 		
 		StringBuilder str = new StringBuilder("");
