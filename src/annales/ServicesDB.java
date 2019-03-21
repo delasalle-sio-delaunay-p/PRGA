@@ -51,4 +51,9 @@ public class ServicesDB {
     	return liste;
     }
     
+    public static boolean verifierIntegrite(List<Auteur> liste) {
+    	
+    	
+		return false;
+    }
 }
